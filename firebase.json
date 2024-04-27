@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/todoapp-nosignals",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
