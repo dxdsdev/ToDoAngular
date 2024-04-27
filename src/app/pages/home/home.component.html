@@ -1,0 +1,57 @@
+<!-- <pre>
+    <code>
+        {{ taskList | json }}
+    </code>
+</pre> -->
+<section class="todoapp">
+    <header class="header">
+        <div class="container">
+            <h1>My Day - ToDo App</h1>
+            <p>All my tasks in one place</p>
+            <input class="new-todo" placeholder="Type new todo" autofocus type="text" (change)="changeHandler()"
+                [formControl]="newTaskCtrl" />
+        </div>
+    </header>
+    <div class="container todoapp-wrapper">
+        @if(taskList.length>0){
+        <section class="main">
+            <ul class="todo-list">
+                @for (item of taskByFilter(); track $index) {
+
+                <li class="{{item.completed? 'completed': '' }} {{item.editable?'editing':''}}"
+                    (dblclick)="updateTaskEditing($index)">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" [checked]="item.completed"
+                            (change)="updateTask($index)" />
+                        <label>{{item.text}}</label>
+                        <button class="destroy" (click)="deleteTask($index)"></button>
+                    </div>
+                    <input class="edit" (blur)="blurInput($index,$event)" value="{{item.text}}"
+                        (keydown.enter)="updateTaskTitle($index,$event)" />
+                </li>
+                }
+            </ul>
+        </section>
+        }
+        <footer class="footer">
+            <span class="todo-count">
+                <strong>{{taskByFilter().length}}</strong>
+                {{ taskByFilter().length == 1 ? 'item':'items' }}
+            </span>
+            <ul class="filters">
+                <li>
+                    <a (click)="changeFilter(typeFilter.all)" class="{{filter==typeFilter.all?'selected':''}}">All</a>
+                </li>
+                <li>
+                    <a (click)="changeFilter(typeFilter.pending)"
+                        class="{{filter==typeFilter.pending?'selected':''}}">Pending</a>
+                </li>
+                <li>
+                    <a (click)=" changeFilter(typeFilter.completed)"
+                        class="{{filter==typeFilter.completed?'selected':''}}">Completed</a>
+                </li>
+            </ul>
+            <button class="clear-completed" (click)="deleteCompletedTask()">Clear completed</button>
+        </footer>
+    </div>
+</section>
